@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>测试video不全屏</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#video{
+				width: 100%;
+			}
+			.shadow{
+				width: 40px;
+				height: 40px;
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="shadow" style="display:none;">弹窗</div>
+		<video width="800" height="" id="video" controls="controls" preload="auto" 
+		 	-webkit-playsinline="true"                      
+			playsinline="true"  
+			x-webkit-airplay="allow"
+			x5-video-player-type="h5" 
+			x5-video-player-fullscreen="true"                      
+			x5-video-orientation="portraint"          
+			style="object-fit:fill">
+			<source src="media/video.mp4" type="video/mp4"></source>
+		</video>
+		<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript">
+			/*var video = $('#video')[0];
+			video.addEventListener("playing",function(){ 
+				alert("played");
+			})*/
+			//video试看5分钟弹窗事件
+			tryLook()
+		function tryLook() {
+			var ua = navigator.userAgent,
+		    isAndroid = /(Android);?[\s/]+([\d.]+)?/.test(ua),
+		  	isIpad = /(iPad).*OS\s([\d_]+)/.test(ua),
+		  	isIpod = /(iPod)(.*OS\s([\d_]+))?/.test(ua),
+		  	isIphone = !isIpad && /(iPhone\sOS)\s([\d_]+)/.test(ua),
+		  	isWechat = /micromessenger/i.test(ua);
+		    if(isAndroid) {
+		    	$('#video')[0].ontimeupdate = function() {
+		    		var currentTime = $('#video')[0].currentTime;
+		    		//console.log(currentTime)
+		    		if (currentTime >= 5) {
+		    			$('#video')[0].pause();
+		    			$('#video')[0].currentTime = 5;
+		    			document.getElementById('video').addEventListener("x5videoexitfullscreen", function(){
+		    				$('.shadow').show();
+		    			})
+		    		}
+		    	};
+		    } else {
+		    	$('#video')[0].ontimeupdate = function() {
+		    		var currentTime = $('#video')[0].currentTime;
+		    		//console.log(currentTime)
+		    		if (currentTime >= 5) {
+		    			$('#video')[0].pause();
+		    			$('.shadow').show();
+		    			var height = $('#form2').height();
+		    			$('.submit2').css("line-height",height+ 'px');
+		    		}
+		    	};
+		    }
+		}
+		</script>
+	</body>
+</html>

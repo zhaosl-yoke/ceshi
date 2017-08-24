@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>只出现一次的提示信息</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<script>
+var alertmessage="Welcome to 脚本之家\n 这个提示信息只会出现一次哟！刷新一下页面试试？肯定没有提示了~"
+var once_per_session=1
+function get_cookie(Name) {
+  var search = Name + "="
+  var returnvalue = "";
+  if (document.cookie.length > 0) {
+    offset = document.cookie.indexOf(search)
+    if (offset != -1) { // if cookie exists
+      offset += search.length
+      end = document.cookie.indexOf(";", offset);
+      if (end == -1)
+         end = document.cookie.length;
+      returnvalue=unescape(document.cookie.substring(offset, end))
+      }
+   }
+  return returnvalue;
+}
+function alertornot(){
+if (get_cookie('alerted')==''){
+loadalert()
+document.cookie="alerted=yes"
+}
+}
+function loadalert(){
+alert(alertmessage)
+}
+if (once_per_session==0)
+loadalert()
+else
+alertornot()
+</script>
+</body>
+</html>
+

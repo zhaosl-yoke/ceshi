@@ -1,0 +1,75 @@
+<!DOCTYPE html>  
+<html>  
+    <head>  
+        <meta charset="utf-8">  
+        <title>html2canvas网页截图</title>    
+        <script src="js/jquery-1.12.1.min.js" type="text/javascript" charset="utf-8"></script>  
+        <script src="js/html2canvas.js" type="text/javascript" charset="utf-8"></script>  
+        <script type="text/javascript">  
+           /*html2canvas()中,第一个参数是要截图的Dom对象，第二个参数时渲染完成后回调的canvas对象。*/  
+            $(function() {  
+               /* html2canvas($("#myCanvas"), {   
+                    onrendered: function(canvas) {  
+                        $('#down_button').attr('href', canvas.toDataURL("image/png"));  
+                        $('#down_button').attr('download', 'myjobdeer.png');  
+                        //$('#down_button').css('display','inline-block');  
+                        var html_canvas = canvas.toDataURL();  
+                        $.post('', {   
+                            order_id: 1,  
+                            type_id: 2,  
+                            html_canvas: html_canvas  
+                        }, function(json) {}, 'json');   
+                    }   
+                });  */
+               //JS
+			 	var xhr = new XMLHttpRequest();
+			 	xhr.open("post","http://localhost:8080/ArtAppInst2/myVideo/selectIndexMusicCircle4wc",true);
+			 	xhr.onreadystatechange = function () {
+			 		if (xhr.readyState==4 && xhr.status ==200) {
+			 			alert(xhr.responseText);
+			 		}
+			 	};
+			 	//比GET请求多了一步
+			 	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			 	//另外,数据是通过send方法发送的
+			 	xhr.send();
+			 	//PHP
+			 	//header("Cache-Control: no-cache, must-revalidate");//可以让浏览器不缓存结果
+			 	//print_r($_POST);
+			 	
+//             $.ajax({
+//             	type:"post",
+//             	url:"http://localhost:8080/ArtAppInst2/myVideo/selectIndexMusicCircle4wc",
+//             	async:true,
+//             	beforeSend: function(xhr) {
+//			        xhr.setRequestHeader("Accept", "*/*");
+//			       // xhr.setRequestHeader("Accept-Encoding", "gzip, deflate");
+//			        xhr.setRequestHeader("Cache-Control", "no-cache");
+//			        //xhr.setRequestHeader("Connection", "keep-alive");
+//			        //xhr.setRequestHeader("Content-Length", "55");
+//			        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+//			       // xhr.setRequestHeader("Host", "localhost:8080");
+//			       // xhr.setRequestHeader("Origin", "http://2019934212.appservice.open.weixin.qq.com");			    
+//			        xhr.setRequestHeader("Pragma", "no-cache");
+//			       // xhr.setRequestHeader("Referer", "https://servicewechat.com/wxe6b510f1e14ba1db/devtools/page-frame.html");
+//			    },
+//			    success:function(data) {
+//			    	cons0le.log(data)
+//			    },
+//			    data:{
+//			    	'institutionId':5639,
+//					'addressId':1088,
+//					'pageNum':1,
+//					'pageSize':15
+//			    }
+//             });
+            });           
+        </script>           
+    </head>  
+    <body>  
+        <div id="myCanvas" style="width: 100px; height: 100px; background-color: cornflowerblue;"></div>  
+        <hr>  
+        <br/>    
+        <a id="down_button">下载</a>    
+    </body>  
+</html>  

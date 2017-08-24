@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0 ,user-scalable=0">
+		<meta name = "format-detection" content = "telephone=no">
+		<title>视频播放</title>	
+		<link rel="stylesheet" href="css/video.css">
+	</head>
+	<body>
+		<div class="container">
+			<video id="video" controls="controls" preload="auto">
+	            <source type="video/mp4">
+	            <source type="video/ogg">
+		    </video>
+		</div>
+		<script src="js/common/jquery-1.12.1.min.js"></script>
+		<script src="js/common/service.js"></script>
+		<script src="js/common/rem.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script>
+			var poster = "http://artapp-dev-bucket.oss-cn-beijing.aliyuncs.com/contestant_attachs/641f0a2e-b830-4128-8761-c1d710ffe67f.png"
+			var url = "http://artapp-dev-bucket.oss-cn-beijing.aliyuncs.com/contestant_attachs/8a3dee4d-c31f-4f4c-8914-6a9608a9d5dd12.mp4"
+			console.log(poster);
+			var userName = decodeURI(decodeURI(getParametersOnUrl('userName')));
+			console.log(userName);
+			var ua = navigator.userAgent,
+		    isAndroid = /(Android);?[\s/]+([\d.]+)?/.test(ua),
+		  	isIpad = /(iPad).*OS\s([\d_]+)/.test(ua),
+		  	isIpod = /(iPod)(.*OS\s([\d_]+))?/.test(ua),
+		  	isIphone = !isIpad && /(iPhone\sOS)\s([\d_]+)/.test(ua),
+		  	isWechat = /micromessenger/i.test(ua);
+			if ( isWechat&&isIphone ) {
+				audioAutoPlay();
+			} else {
+				videoPlay();
+			}		
+			function videoPlay() {
+				$('#video').attr("src", url);
+				$('#video').load();
+				$('#video').attr("poster",poster);
+				$('#video')[0].play();			
+			}
+			function audioAutoPlay() {
+				document.addEventListener("WeixinJSBridgeReady", function () {
+					$('#video').attr("src",url);
+					$('#video').load();
+					$('#video').attr("poster",poster);
+					$('#video')[0].play();
+				},false)
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<style>
+		.user-arrow{//这是箭头的样式 
+			width:12px;
+			position:absolute;
+		    right:26px;
+		    margin-top: 8px;
+		    cursor:pointer;
+		    display:inline-block;//放箭头的标签一定是块级元素
+		}
+		.rotate{
+		    transform-origin:center center; //旋转中心要是正中间 才行
+		    transform: rotate(180deg);
+		    -webkit-transform: rotate(180deg);
+		    -moz-transform: rotate(180deg);
+		    -ms-transform: rotate(180deg);
+		    -o-transform: rotate(180deg);
+		    transition: transform 0.2s; //过度时间 可调
+		    -moz-transition: -moz-transform 0.2s; 
+		    -moz-transition: -moz-transform 0.2s; 
+		    -o-transition: -o-transform 0.2s; 
+		    -ms-transition: -ms-transform 0.2s; 
+		}
+		.rotate1{
+		    transform-origin:center center;
+		    transform: rotate(0deg); //返回原点
+		    -webkit-transform: rotate(0deg);
+		    -moz-transform: rotate(deg);
+		    -ms-transform: rotate(0deg);
+		    -o-transform: rotate(0deg);
+		    transition: transform 0.2s; 
+		    -moz-transition: -moz-transform 0.2s; 
+		    -moz-transition: -moz-transform 0.2s; 
+		    -o-transition: -o-transform 0.2s; 
+		    -ms-transition: -ms-transform 0.2s; 
+		}
+		</style>
+	</head>
+	<body>
+		<div>这是测试页面2</div>
+		<div class="user-list-title">标准点播-<small>体验版</small>
+        	<img src="http://i1.letvimg.com/lc07_lecloud/201610/09/11/32/userCenter/jiantoublue1.png" class="user-arrow">
+		</div>
+		<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript">
+		    var usercenter = {		    
+				init:function(){	
+				    this.modal();		    
+				},
+				modal: function() {
+		            $(".user-arrow").click(function(){                            
+		                if($(this).hasClass("rotate")){ //点击箭头旋转180度
+		                    $(this).removeClass("rotate");
+		                    $(this).addClass("rotate1");
+		                }else{
+		                    $(this).removeClass("rotate1"); //再次点击箭头回来
+		                    $(this).addClass("rotate");
+		                }
+		            })
+		        }
+    		}
+    		usercenter.init();
+		</script>
+	</body>
+</html>

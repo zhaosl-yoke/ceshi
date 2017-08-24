@@ -1,0 +1,64 @@
+<!doctype html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <style>
+        .upload-box {
+            position: relative;
+        }
+
+        form {
+            height: 30px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        input[type="file"] {
+            border: 1px solid red;
+            width: 480px;
+            opacity: 0;            
+        }
+
+        input[type="submit"] {
+            width: 100px;
+            height: 30px;
+            background: #ddd;
+            border: none;
+        }
+
+        .upload-choose {
+            width: 80px;
+            height: 30px;
+            background: #eee;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            font-family: "Microsoft YaHei";
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .upload-info {
+            width: 400px;
+            border: 1px solid #eee;
+            height: 28px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="upload-box">
+    <form action="">
+        <input type="file" id="upload"/> <!--原生的file-->
+        <input type="submit" value="上传"/> <!--原生的submit-->
+    </form>
+    <div class="upload">
+        <div class="upload-choose">选择文件</div>
+        <div class="upload-info"></div>
+    </div>
+</div>
+</body>
+</html>

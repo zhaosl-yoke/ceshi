@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>flex</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<style type="text/css">
+			body{
+				font-size: 0.28rem;
+			}
+			/*.bot{
+				height: 0.75rem;
+				display: -webkit-box;
+				line-height: 0.75rem;
+			}
+			.bot span{
+				display: block;
+				-webkit-box-flex: 1;
+				text-indent: 0.2rem;
+				color: #4d4d4d;
+			}
+			.bot span img{
+				width: 0.45rem;
+				vertical-align: middle;
+				margin-right: 0.1rem;
+			}*/
+			.bot{
+				height: 0.75rem;
+				display: flex;
+				line-height: 0.75rem;
+				justify-content: space-around;
+			}
+			.bot span{
+				color: #4d4d4d;
+				display: flex;
+			}
+			.bot span img{
+				width: 0.45rem;
+				margin-right: 0.1rem;
+				align-self: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bot">
+			<span><img src="img/look.png">2154人看过</span>
+			<span><img src="img/zan.png">248</span>
+			<span><img src="img/chat.png">879</span>
+		</div>
+		<script type="text/javascript" src="js/rem.js"></script>
+	</body>
+</html>

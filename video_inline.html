@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>video在小窗口播放</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.top{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 4.2rem;
+				background: url(img/poster.jpg) no-repeat;
+				background-position: center;
+				background-size: cover;
+			}
+			.top img{
+				width: 0.8rem;
+			}
+			#video{
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="top">
+			<video src="" 
+				controls="controls" 
+				style="display:none;"
+				width="100"
+				height="100"
+				x-webkit-airplay="true"
+				webkit-playsinline
+				playsinline="true"
+				preload="none"
+				id="video"></video>
+			<img src="img/play.png" alt="" class="play"/>
+		</div>
+		<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript" src="js/common/rem.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$('.play').click(function() {
+					$(this).hide();
+					$('#video').show();
+					var url = "media/video2.mp4";
+					poster = "img/poster.jpg";
+					var ua = navigator.userAgent,
+				    isAndroid = /(Android);?[\s/]+([\d.]+)?/.test(ua),
+				  	isIpad = /(iPad).*OS\s([\d_]+)/.test(ua),
+				  	isIpod = /(iPod)(.*OS\s([\d_]+))?/.test(ua),
+				  	isIphone = !isIpad && /(iPhone\sOS)\s([\d_]+)/.test(ua),
+				  	isWechat = /micromessenger/i.test(ua);
+					if ( isWechat&&isIphone ) {
+						audioAutoPlay();
+					} else {
+						videoPlay();
+					}	
+					function videoPlay() {
+						$('#video').attr("src",url);
+						//$('#video').attr("poster",poster);
+						$('#video')[0].play();
+						$('.top').css("background","#000");
+					}
+					function audioAutoPlay() {
+						document.addEventListener("WeixinJSBridgeReady", function () {
+							$('video').attr("src",url);
+							//$('video').attr("poster",poster);
+							$('video')[0].play();
+							$('.top').css("background","#000");
+						},false)
+					}
+					$('#video')[0].addEventListener("pause", function() {
+						$('#video').hide();
+						$('.top').css({
+							"background":"url("+ poster +")",
+							"background-position":"center",
+							"background-size":"cover"
+						});
+						$('.play').show();	
+					});
+				})
+			})
+			/*var url = "media/video2.mp4";
+			poster = "img/poster.jpg";
+			var ua = navigator.userAgent,
+		    isAndroid = /(Android);?[\s/]+([\d.]+)?/.test(ua),
+		  	isIpad = /(iPad).*OS\s([\d_]+)/.test(ua),
+		  	isIpod = /(iPod)(.*OS\s([\d_]+))?/.test(ua),
+		  	isIphone = !isIpad && /(iPhone\sOS)\s([\d_]+)/.test(ua),
+		  	isWechat = /micromessenger/i.test(ua);
+			if ( isWechat&&isIphone ) {
+				audioAutoPlay();
+			} else {
+				videoPlay();
+			}		
+			function videoPlay() {
+				$('#video').attr("src",url);
+				$('#video').attr("poster",poster);
+				$('#video')[0].play();
+			}
+			function audioAutoPlay() {
+				document.addEventListener("WeixinJSBridgeReady", function () {
+					$('video').attr("src",url);
+					$('video').attr("poster",poster);
+					$('video')[0].play();
+				},false)
+			}*/
+		</script>
+	</body>
+</html>

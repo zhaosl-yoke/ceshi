@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	</head>
+	<body>
+		<input type="text" name="" id="input" />
+		<button>提交</button>
+		<script type="text/javascript" src="js/common/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript">
+			$('button').click(function() {
+				var val = $('#input').val();
+				//var username = /^[\u4E00-\u9FA5A-Za-z]+$/;
+				var username = /^[a-zA-Z\u4e00-\u9fa5]+$/;
+				var gz=/(^[\u4e00-\u9fa5]{1}[\u4e00-\u9fa5\.·。]{0,8}[\u4e00-\u9fa5]{1}$)|(^[a-zA-Z]{1}[a-zA-Z\s]{0,8}[a-zA-Z]{1}$)/;
+
+
+				if (val) {
+					if(!gz.test(val)){
+						alert("1")
+					}
+				}
+			})
+			
+			
+		</script>
+	</body>
+</html>

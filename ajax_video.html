@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>测试</title>
+		<link rel="stylesheet" type="text/css" href="css/video-js.css" />
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.m{
+				height: 4.2rem;
+			}
+			.my-video-dimensions.vjs-fluid {
+			    padding-top: 4.2rem;
+			}
+			.video-js .vjs-big-play-button {
+			    top: 50%;
+			    left: 50%;
+			    width: 1.65em;
+			    height: 1.65em;
+			    transform: translate(-1em, -0.825em);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="m">
+				<video id="my-video" class="video-js" x5-video-player-type="true" webkit-playsinline="true" x5-video-player-type='h5' playsinline="true" x5-playsinline x-webkit-airplay="allow" controls preload="auto"  poster="" data-setup="{}">
+					<source type="video/mp4">
+					<p class="vjs-no-js">
+						To view this video please enable JavaScript, and consider upgrading to a web browser that
+						<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+					</p>
+				</video>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/common/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript" src="js/common/rem.js"></script>
+		<script src="js/video.min.js"></script>
+		<script type="text/javascript">
+			var url = "http://artapp-dev-bucket.oss-cn-beijing.aliyuncs.com/";
+			var width = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			var videoCover;
+			var video;
+			$.ajax({
+				type:"post",
+				url:"https://www.easy-mock.com/mock/5a406a3d6b299a5279fc73e9/video/video",
+				async:false,
+				success: function(data) {
+					console.log(data);
+					videoCover = url+ data.body.share.videoCover;
+					video = url + data.body.share.media;
+				}
+			});
+			var options = {};//要配置的参数; 
+			options = {
+				"autoplay": false,
+				"width": width,
+				"fluid": true,
+				"poster": videoCover,
+				"sources": [{
+					src: video,
+					type: 'video/mp4'
+				}]
+			};
+			var player = videojs('my-video', options,function() {
+				console.log("this is ready");
+			});
+			function onPlayerReady() {
+				videojs.log('Your player is ready!');
+				this.on('ended', function() {
+					videojs.log('Awww...over so soon?!');
+				});
+			}
+			//获取视频详情
+			/*var width = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			var video_url = "http://artapp-dev-bucket.oss-cn-beijing.aliyuncs.com/course_summarizes/EC37661A-A779-451E-91EA-48F6EE8A53AD38.mp4";
+			var photo_url = "http://artapp-dev-bucket.oss-cn-beijing.aliyuncs.com/course_summarizes/71CB170C-4F6E-444C-A263-21B9EB100936.png";
+			var options = {}; //要配置的参数;
+			options = {
+				"autoplay": false,
+				"width": width,
+				"fluid": true,
+				"poster": photo_url,
+				"sources": [{
+					src: video_url,
+					type: 'video/mp4'
+				}]
+			};
+			//console.log(options);
+			var player = videojs('my-video', options, function onPlayerReady() {
+				videojs.log('Your player is ready!');
+				this.on('ended', function() {
+					videojs.log('Awww...over so soon?!');
+				});
+			});*/
+		</script>
+	</body>
+
+</html>

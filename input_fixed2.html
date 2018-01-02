@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+ <html>
+    <head>
+    	<meta charset="UTF-8"/>
+     	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+      	<title>input定位输入框上面</title>
+     	<script src="js/common/jquery-1.12.1.min.js"></script>
+      	<style>	
+			.scrollWrapper {
+			    position: absolute;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			    top:0;
+			}
+			.bottomInput {
+			    position: absolute;
+			    bottom:0;
+			    left:0;
+			    right: 0;
+			}
+    	</style>
+  	</head>
+	<body>
+	    <div class="scrollWrapper">
+	        <div class="bottomInput">
+	            <input type="text" placeholder="input"/>
+	        </div>
+	    </div>
+	</body>
+
+   <script type="text/javascript">
+    // 在输入框获取焦点, 键盘弹起后, 真的是一行代码
+	var interval = setInterval(function() {
+	    document.body.scrollTop = document.body.scrollHeight
+	}, 100)
+   </script>
+ </html>

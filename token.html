@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript" src="js/common/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript">
+			/*$.ajax({
+				type:"get",
+				url:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx21921999e5b1efbf&secret=d5f1f6f3ce01edc827a14d20e2d42966",
+				async:true,
+				success:function(data) {
+					console.log(data);
+				}
+			});*/
+			$.ajax({
+				type:"post",
+				url:"https://www.easy-mock.com/mock/5a3a34f2ccd95b5cf43c6575/test_data/",
+				async:true,
+				success: function(data) {
+					console.log(data);
+				}
+			});
+		</script>
+	</body>
+</html>

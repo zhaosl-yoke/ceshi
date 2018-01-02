@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<meta content="width=device-width, initial-scale=1,maximum-scale=1,maximum-scale=1, user-scalable=no" name="viewport">
+		<style>
+			*{ 
+				margin:0;
+				padding:0; 
+				list-style:none;
+			}
+			body{ 
+				font-size:0.28rem;
+				color:#666;
+			}
+		</style>
+	</head>
+<body>
+	<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+	<video id="video"></video>
+<script>
+	if(Hls.isSupported()) {
+	    var video = document.getElementById('video');
+	    var hls = new Hls();
+	    hls.loadSource('http://4594.liveplay.myqcloud.com/live/4594_f40e1b499f95f7b1a9658ded35a25fa3.m3u8');
+	    //http://www.streambox.fr/playlists/test_001/stream.m3u8
+	    //http://4594.liveplay.myqcloud.com/live/4594_f40e1b499f95f7b1a9658ded35a25fa3.m3u8
+	    hls.attachMedia(video);
+	    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+	      	video.play();
+	  	});
+	}
+</script>
+</body>
+</html>

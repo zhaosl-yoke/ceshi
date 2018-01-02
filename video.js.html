@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1,user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<title>黄雀视频</title>
+		<link rel="stylesheet" type="text/css" href="css/video-js.css" />
+		<link rel="stylesheet" type="text/css" href="../css/media-100.css" />
+		<link rel="stylesheet" type="text/css" href="css/index2.css" />
+	</head>
+
+	<body style="height: 100vh;display: none;">
+		<div class="m">
+			<video id="my-video" class="video-js" x5-video-player-type="true" webkit-playsinline="true" x5-video-player-type='h5' playsinline="true" x5-playsinline x-webkit-airplay="allow" controls preload="auto" width="740" height="400" poster="" data-setup="{}">
+				<source type="video/mp4">
+				<p class="vjs-no-js">
+					To view this video please enable JavaScript, and consider upgrading to a web browser that
+					<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+				</p>
+			</video>
+		</div>
+		<div id="app">
+			<div class="Vmessage">
+				<div class="fl" v-if="videoInfo.is_agree==false">
+					<img src="img/zangray.png" @click="is_agree()" v-cloak/>
+					<span v-clock>{{videoInfo.total_agree}}</span>
+				</div>
+				<div class="fl" v-if="videoInfo.is_agree==true">
+					<img src="img/zanred.png" />
+					<span v-cloak>{{videoInfo.total_agree}}</span>
+				</div>
+				<div class='fl'>
+					<img src="img/viewgray.png" />
+					<span v-cloak>{{videoInfo.total_play}}</span>
+				</div>
+			</div>
+			<div class="goodsTitle">
+				边看边买
+			</div>
+			<div class="goodsList">
+				<!--循环渲染-->
+				<div class="goodsChild" v-for="(goods,index) in goodsList">
+					<div class="goodsChildLeft fl">
+						<img v-cloak :src="goods.goods_thums" />
+						<span v-cloak>{{index+1}}</span>
+					</div>
+					<div class="goodsChildRight fr">
+						<p v-cloak>{{goods.goods_name}}</p>
+						<span style="color:#fe471d;display: inline-block;" v-cloak>￥ <font>{{goods.act_price}}</font></span>
+						<span @click='qiang(goods.goods_id)'>马上抢</span>
+					</div>
+				</div>
+				<!--<div class="goodsChild">
+					<div class="goodsChildLeft fl">
+						<img src="img/skay.png" />
+						<span>1</span>
+					</div>
+					<div class="goodsChildRight fr">
+						<p>物品描述物品描述物品描述物品描述</p>
+						<span style="color:#fe471d;display: inline-block;">￥ <font>1200.00</font></span>
+						<span>马上抢</span>
+					</div>
+				</div>
+				<div class="goodsChild">
+					<div class="goodsChildLeft fl">
+						<img src="img/skay.png" />
+						<span>1</span>
+					</div>
+					<div class="goodsChildRight fr">
+						<p>物品描述物品描述物品描述物品描述</p>
+						<span style="color:#fe471d;display: inline-block;">￥ <font>1200.00</font></span>
+						<span>马上抢</span>
+					</div>
+				</div>
+				<div class="goodsChild">
+					<div class="goodsChildLeft fl">
+						<img src="img/skay.png" />
+						<span>1</span>
+					</div>
+					<div class="goodsChildRight fr">
+						<p>物品描述物品描述物品描述物品描述</p>
+						<span style="color:#fe471d;display: inline-block;">￥ <font>1200.00</font></span>
+						<span>马上抢</span>
+					</div>
+				</div>
+				<div class="goodsChild">
+					<div class="goodsChildLeft fl">
+						<img src="img/skay.png" />
+						<span>1</span>
+					</div>
+					<div class="goodsChildRight fr">
+						<p>物品描述物品描述物品描述物品描述</p>
+						<span style="color:#fe471d;display: inline-block;">￥ <font>1200.00</font></span>
+						<span>马上抢</span>
+					</div>
+				</div>-->
+			</div>
+		</div>
+		<script src="js/jquery-2.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/video.min.js"></script>
+		<script type="text/javascript">
+			// 设置获取cookie
+			var cookiedate = new Date();
+			cookiedate.setTime(cookiedate.getTime() + 5 * 360 * 24 * 60 * 60 * 1000); //设置cookie的有效期为5年，手机端即模仿永久有效
+			var CookieUtil = {
+				// 设置cookie
+				set: function(name, value, expires, path, domain, secure) {
+					var cookieText = "";
+					cookieText += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+					if(expires instanceof Date) {
+						cookieText += "; expires=" + expires.toGMTString();
+					}
+					if(path) {
+						cookieText += "; path=" + path;
+					}
+					if(domain) {
+						cookieText += "; domain=" + domain;
+					}
+					if(secure) {
+						cookieText += "; secure";
+					}
+					document.cookie = cookieText;
+				},
+				// name=value; expires=expiration_time; path=domain_path; domain=domain_name; secure
+				// 获取cookie
+				get: function(name) {
+					var cookieName = encodeURIComponent(name) + "=",
+						cookieStart = document.cookie.indexOf(cookieName),
+						cookieValue = "";
+					if(cookieStart > -1) {
+						var cookieEnd = document.cookie.indexOf(";", cookieStart);
+						if(cookieEnd == -1) {
+							cookieEnd = document.cookie.length;
+						}
+						cookieValue = decodeURIComponent(document.cookie.substring(cookieStart + cookieName.length, cookieEnd));
+					}
+					return cookieValue;
+				},
+				// 删除cookie
+				unset: function(name, path, domain, secure) {
+					this.set(name, "", Date(0), domain, path, secure);
+				}
+			};
+
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+			};
+			//截取url参数封装函数     仅限于获取参数;
+			function geturl(direction) {
+				var $url = window.location.search;
+				if($url != null && $url.toString().length > 1) {
+					var direction = GetQueryString(direction);
+					//根据direction  回调到相应的页面
+					return direction;
+				}
+			}
+
+			function $ajaxToken(url, type, path, direction, data, successFuc, errorFuc) {
+
+				var token = CookieUtil.get("token");
+				//判断是否是微信浏览器和普通浏览器
+				var ua = navigator.userAgent.toLowerCase();
+				if(ua.match(/MicroMessenger/i) == "micromessenger") {
+					//document.write("微信浏览器");
+					//	    var token = CookieUtil.get("token");
+					var $jump_url = window.location.href;
+					var $gdata = {
+						"jump_url": $jump_url
+					};
+					if(token == "") {
+						$.ajax({
+							type: "get",
+							url: "http://api.hqwell.cn/shop/v2/wechat/code",
+							async: true,
+							data: $gdata,
+							success: function(data) {
+								//alert("进入微信授权");
+								window.location.href = data.redirect_url;
+								//授权之后  跳转到  
+							},
+							error: function(e) {
+
+							}
+						});
+					} else {
+						$.ajax({
+							url: "http://api.hqwell.cn/" + url,
+							type: type,
+							data: data,
+							beforeSend: function(xhr) {
+								//将token存放到头部			
+								xhr.setRequestHeader("token", token);
+							},
+							success: successFuc,
+							error: (errorFuc == undefined) ? TokenErrorDefaultwx : errorFuc
+						});
+					}
+
+				} else { //非微信浏览器
+					if(token == "") {
+						window.location.href = "../login/login.html?path=" + path + "&&direction=" + direction;
+					};
+					$.ajax({
+						url: "http://api.hqwell.cn/" + url,
+						type: type,
+						data: data,
+						beforeSend: function(xhr) {
+							//将token存放到头部			
+							xhr.setRequestHeader("token", token);
+						},
+						success: successFuc,
+						error: (errorFuc == undefined) ? TokenErrorDefault : errorFuc
+					});
+				}
+
+				//默认报错信息    这个函数写在里面是为了拿到参数   direction
+				//微信默认报错
+				function TokenErrorDefaultwx(xhr) {
+					console.log(xhr);
+					if(xhr.status == 400&&xhr.responseJSON.error_code==10001) {
+						$.ajax({
+							type: "get",
+							url: "http://api.hqwell.cn/shop/v2/wechat/code",
+							async: true,
+							data: $gdata,
+							success: function(data) {
+								//					alert("进入微信授权");
+								window.location.href = data.redirect_url;
+								//授权之后  跳转到  
+							},
+							error: function(e) {
+
+							}
+						});
+						return;
+					};
+					if(xhr.responseJSON.error_code == 60000) { //收货地址不存在
+						alert(xhr.responseJSON.msg);
+						return;
+					};
+					if(xhr.responseJSON.error_code == 80000) {
+						alert(xhr.responseJSON.msg);
+						return;
+					};
+					if(xhr.responseJSON.error_code == 20002) { //其他时候的状态码只要弹出错误信息即可
+
+						window.location.href = "../index.html"
+						//			alert(xhr.responseJSON.msg)
+						return;
+					} else {
+						alert(xhr.responseJSON.msg);
+						return;
+					}
+				};
+				//非微信默认报错
+				function TokenErrorDefault(xhr) {
+					console.log(xhr);
+					if(xhr.status == 400&&xhr.responseJSON.error_code==10001) { //如果状态码是400 token过期  跳转到登录页面	
+						window.location.href = "../login/login.html?path=" + path + "&&direction=" + direction;
+						return;
+					};
+					if(xhr.responseJSON.error_code == 60000) { //收货地址不存在
+						alert(xhr.responseJSON.msg);
+						return;
+					};
+					if(xhr.responseJSON.error_code == 80000) {
+						alert(xhr.responseJSON.msg);
+						return;
+					};
+					if(xhr.responseJSON.error_code == 20002) { //其他时候的状态码只要弹出错误信息即可
+						window.location.href = "../index.html";
+						return;
+						//			alert(xhr.responseJSON.msg)
+					} else {
+						alert(xhr.responseJSON.msg);
+						return;
+
+					}
+				};
+			};
+		</script>
+		<script type="text/javascript">
+			//我的资料   页面初始化
+			var app = new Vue({
+				el: '#app',
+				data: {
+					videoInfo: "", //视频详情
+					goodsList: '' //点播商品列表
+				},
+				created: function() {
+
+				},
+				mounted: function() {
+					console.log("创建完成")
+				},
+				methods: {
+					is_agree: function() { //点赞函数
+						var vod_id = geturl("id");
+						var data = {
+							"vod_id": vod_id
+						}
+						$ajaxToken("shop/v2/vod/agree", "post", "../videoNew/", "index", data, function(data) {
+							app.videoInfo.total_agree = parseInt(app.videoInfo.total_agree) + 1;
+							app.videoInfo.is_agree = true;
+						})
+					},
+					qiang:function(goods_id){
+						window.location.href='../myhome/produce.html?id='+goods_id;
+					}
+				}
+			});
+			//获取视频详情
+			var vod_id = geturl("id");
+			var data = {
+				"vod_id": vod_id
+			};
+			console.log(data)
+			var width = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			$ajaxToken("shop/v2/vod/info", "post", "../videoNew/", "index", data, function(data) {
+				console.log(data)
+				app.videoInfo = data;
+				var vod_id = geturl("id");
+				var data2 = {
+					"vod_id": vod_id
+				}
+				$ajaxToken("shop/v2/vod/play", "post", "../videoNew/", "index", data2, function(data) {
+					console.log("视频播放书增加")
+				});
+			});
+			var video_url = geturl("video_url");
+			var photo_url = geturl("photo_url");
+			var options = {}; //要配置的参数;
+			options = {
+				"autoplay": false,
+				"width": width,
+				"fluid": true,
+				"poster": photo_url,
+				"sources": [{
+					src: video_url,
+					type: 'video/mp4'
+				}]
+			};
+			console.log(options);
+
+			var player = videojs('my-video', options, function onPlayerReady() {
+				videojs.log('Your player is ready!');
+				this.on('ended', function() {
+					videojs.log('Awww...over so soon?!');
+				});
+			});
+			//获取商品列表
+	        console.log(data)
+			$ajaxToken("shop/v2/vod/goods", "get", "../videoNew/", "index", data, function(data) {
+				$("body").css("display",'block');
+				console.log(data)
+				app.goodsList=data.data;
+			});
+		</script>
+	</body>
+
+</html>

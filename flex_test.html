@@ -9,11 +9,17 @@
 				margin: 0;
 				padding: 0;
 			}
+			body,html{
+				width: 100%;
+				height: 100%;
+				font-size: 0.28rem;
+			}
 			.container{
 				display: flex;
 				flex-direction:row;
 				flex-wrap: wrap-reverse;
 				justify-content: space-around;
+				padding: 0 0.2rem;
 			}
 			.container div{
 				width: 40px;
@@ -24,6 +30,25 @@
 				background: red;
 				margin: 10px;
 			}
+			.about{
+				display: -webkit-box;
+			    overflow: hidden;
+			    white-space: normal!important;
+			    text-overflow: ellipsis;
+			    word-wrap: break-word;
+			    -webkit-line-clamp: 2;
+			    -webkit-box-orient: vertical;
+
+			}
+			/*.about{
+				color:#373737;
+				font-size: 0.26rem;
+				height: 0.70rem;
+				line-height:0.35rem;
+				white-space: normal;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}*/
 		</style>
 	</head>
 	<body>
@@ -31,6 +56,19 @@
 			<div>12</div>
 			<div>12</div>
 			<div>12</div>
+			<p class="about">第2期 学习音乐，学习艺术的本质是什么，学习演奏，学习乐器演奏它实际上是学习一种表演艺术，这个表演艺术是一种文化，是一种艺术，它不仅仅是学习某种乐器的操作方式，不仅仅是学习某种乐器的弹奏方式，而是要学会表达音乐。</p>
 		</div>
+		<button>返回</button>
+		
+		<script type="text/javascript" src="js/common/jquery-1.12.1.min.js"></script>
+		<script type="text/javascript" src="js/common/rem.js"></script>
+		<script type="text/javascript">
+			$('button').click(function() {
+				//location.href=document.referrer;
+				self.location=document.referrer;
+				/*history.go(-1);
+		   		location.reload();*/
+			})
+		</script>
 	</body>
 </html>
